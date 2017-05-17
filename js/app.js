@@ -3,6 +3,7 @@ $(document).foundation()
 const megaroster = {
     init() {
         this.max = 0
+        this.studentList = document.querySelector('#student-list')
         document
             .querySelector('#new-student')
             .addEventListener('submit', this.addStudents.bind(this));
@@ -16,11 +17,14 @@ const megaroster = {
             name: f.studentName.value,
         }
         this.max++
-        this.buildListItem(student)
+
+        this.studentList.appendChild(this.buildListItem(student))
     },
 
     buildListItem(student){
-        console.log(student)
+        const li = document.createElement('li')
+        li.textContent = student.name
+        return li
     },
 }
 megaroster.init()
