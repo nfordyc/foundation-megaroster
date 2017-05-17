@@ -26,6 +26,7 @@ const megaroster = {
 
     buildListItem(student){
         const li = document.createElement('li')
+        li.dataset.id = student.id
         li.textContent = student.name
         return li
     },
