@@ -6,9 +6,13 @@ const megaroster = {
     init() {
         this.max = 0
         this.studentList = document.querySelector('#student-list')
+        this.setupEventListeners()
+    },
+
+    setupEventListeners() {
         document
             .querySelector('#new-student')
-            .addEventListener('submit', this.addStudents.bind(this));
+            .addEventListener('submit', this.addStudents.bind(this))
     },
 
     addStudents(e) {
@@ -36,11 +40,22 @@ const megaroster = {
         li.querySelector('.student-name').textContent = student.name
         this.removeClassName(li,'template')
         li.dataset.id = student.id
+
+        li
+            
+            .querySelector('button.remove')
+            .addEventListener('click', this.removeStudent.bind(this))
+
         return li
+    },
+
+    removeStudent(e){
+        const btn = e.target
+        btn.closest('.student').remove()
     },
 
     removeClassName(el, className){
         el.className = el.className.replace(className,'').trim()
-    }
+    },
 }
 megaroster.init()
