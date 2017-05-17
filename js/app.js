@@ -1,6 +1,8 @@
 $(document).foundation()
 
 const megaroster = {
+    students: [],
+
     init() {
         this.max = 0
         this.studentList = document.querySelector('#student-list')
@@ -16,6 +18,7 @@ const megaroster = {
             id: this.max + 1,
             name: f.studentName.value,
         }
+        this.students.push(student)
         this.max++
 
         this.studentList.appendChild(this.buildListItem(student))
