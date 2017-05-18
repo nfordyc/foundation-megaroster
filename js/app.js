@@ -65,6 +65,7 @@ const megaroster = {
         const span = btn.closest('.student')
             .querySelector('.student-name')
         const name = span.textContent
+        const listNodes = document.querySelector('ul')
 
         const StudentIndex = this.students.findIndex((student,i) => {
             if(student.name === name) {
@@ -77,7 +78,9 @@ const megaroster = {
         let holdStudent = this.students[StudentIndex]
         this.students[StudentIndex] = this.students[StudentIndex - 1]
         this.students[StudentIndex - 1] = holdStudent
-        console.log(this.students)
+
+        listNodes.insertBefore(listNodes.childNodes[StudentIndex],
+            listNodes.childNodes[StudentIndex - 1])
         
     },
 
