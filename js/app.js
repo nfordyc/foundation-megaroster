@@ -21,6 +21,7 @@ const megaroster = {
         const student = {
             id: this.max + 1,
             name: f.studentName.value,
+            promoted: false,
         }
         this.students.unshift(student)
         this.max++
@@ -42,11 +43,31 @@ const megaroster = {
         li.dataset.id = student.id
 
         li
-            
             .querySelector('button.remove')
             .addEventListener('click', this.removeStudent.bind(this))
 
+        li
+            .querySelector('button.promote')
+            .addEventListener('click', this.promoteStudent.bind(this))
+
         return li
+    },
+
+    promoteStudent(e){
+        const btn = e.target
+        const span = btn.closest('.student')
+            .querySelector('.student-name')
+        span.style.color = 'red'
+        const name = span.textContent
+
+        //promote student in array
+        this.students.forEach(student => {
+            if(student.name === name) {
+                student.promoted = true
+                console.log(this.students)
+                return
+            }
+        })
     },
 
     removeStudent(e){
