@@ -7,6 +7,24 @@ const megaroster = {
         this.max = 0
         this.studentList = document.querySelector('#student-list')
         this.setupEventListeners()
+
+        if(localStorage.getItem('students') !== ''){
+                this.initializeList()      
+        }
+    },
+
+    initializeList(){
+        const storageStudents = JSON.parse(localStorage.getItem('students'))
+        this.students = storageStudents
+        if(storageStudents === null){
+            this.students = []
+            return
+        }
+        
+        for(let i = storageStudents.length - 1;i >= 0;i--){
+            const listItem = this.buildListItem(storageStudents[i])
+            this.prependChild(this.studentList,listItem)
+        }
     },
 
     setupEventListeners() {
@@ -29,6 +47,7 @@ const megaroster = {
         const listItem = this.buildListItem(student)
         this.prependChild(this.studentList,listItem)
         f.reset()
+        localStorage.setItem('students',JSON.stringify(this.students))
     },
 
     prependChild(parent,child) {
@@ -41,6 +60,9 @@ const megaroster = {
         li.querySelector('.student-name').textContent = student.name
         this.removeClassName(li,'template')
         li.dataset.id = student.id
+        if(student.promoted){
+            li.querySelector('.student-name').style.color = 'red'
+        }
 
         li
             .querySelector('button.remove')
@@ -81,6 +103,7 @@ const megaroster = {
 
         listNodes.insertBefore(listNodes.childNodes[StudentIndex],
             listNodes.childNodes[StudentIndex - 1])
+        localStorage.setItem('students',JSON.stringify(this.students))
     },
 
     moveDown(e) {
@@ -105,7 +128,7 @@ const megaroster = {
 
         listNodes.insertBefore(listNodes.childNodes[StudentIndex + 1],
             listNodes.childNodes[StudentIndex])
-
+        localStorage.setItem('students',JSON.stringify(this.students))
     },
 
     promoteStudent(e){
@@ -119,10 +142,10 @@ const megaroster = {
         this.students.forEach(student => {
             if(student.name === name) {
                 student.promoted = true
-                console.log(this.students)
                 return
             }
         })
+        localStorage.setItem('students',JSON.stringify(this.students))
     },
 
     removeStudent(e){
@@ -137,6 +160,7 @@ const megaroster = {
                 return
             }
         })
+        localStorage.setItem('students',JSON.stringify(this.students))
     },
 
     removeClassName(el, className){
