@@ -81,10 +81,30 @@ const megaroster = {
 
         listNodes.insertBefore(listNodes.childNodes[StudentIndex],
             listNodes.childNodes[StudentIndex - 1])
-        
     },
 
     moveDown(e) {
+        if(this.students.length === 1) return
+        const btn = e.target
+        const span = btn.closest('.student')
+            .querySelector('.student-name')
+        const name = span.textContent
+        const listNodes = document.querySelector('ul')
+
+        const StudentIndex = this.students.findIndex((student,i) => {
+            if(student.name === name) {
+                return true
+            }
+        })
+
+        //swap elements in array
+        if(StudentIndex === this.students.length - 1) return
+        let holdStudent = this.students[StudentIndex]
+        this.students[StudentIndex] = this.students[StudentIndex + 1]
+        this.students[StudentIndex + 1] = holdStudent
+
+        listNodes.insertBefore(listNodes.childNodes[StudentIndex + 1],
+            listNodes.childNodes[StudentIndex])
 
     },
 
