@@ -49,8 +49,40 @@ const megaroster = {
         li
             .querySelector('button.promote')
             .addEventListener('click', this.promoteStudent.bind(this))
+        li
+            .querySelector('button.up')
+            .addEventListener('click', this.moveUp.bind(this))
+        li
+            .querySelector('button.down')
+            .addEventListener('click', this.moveDown.bind(this))
 
         return li
+    },
+
+    moveUp(e) {
+        if(this.students.length === 1) return
+        const btn = e.target
+        const span = btn.closest('.student')
+            .querySelector('.student-name')
+        const name = span.textContent
+
+        const StudentIndex = this.students.findIndex((student,i) => {
+            if(student.name === name) {
+                return true
+            }
+        })
+
+        //swap elements in array
+        if(StudentIndex === 0) return
+        let holdStudent = this.students[StudentIndex]
+        this.students[StudentIndex] = this.students[StudentIndex - 1]
+        this.students[StudentIndex - 1] = holdStudent
+        console.log(this.students)
+        
+    },
+
+    moveDown(e) {
+
     },
 
     promoteStudent(e){
