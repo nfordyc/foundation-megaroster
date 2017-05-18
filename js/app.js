@@ -51,7 +51,16 @@ const megaroster = {
 
     removeStudent(e){
         const btn = e.target
+        const name = btn.closest('.student')
+            .querySelector('.student-name').textContent
         btn.closest('.student').remove()
+
+        this.students.forEach(student => {
+            if(student.name === name) {
+                this.students.splice(this.students.indexOf(student),1)
+                return
+            }
+        })
     },
 
     removeClassName(el, className){
